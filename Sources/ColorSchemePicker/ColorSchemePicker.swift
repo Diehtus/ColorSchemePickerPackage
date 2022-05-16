@@ -74,11 +74,11 @@ extension ColorSchemePicker where PickerLabel == Label<Text, Image> {
     /// Der Text lautet: 'Darstellung'
     public static let standard: ColorSchemePicker = {
         ColorSchemePicker {
-            Label(LocalizedStringKey("Appearance"), systemImage: "circle.righthalf.filled")
+            Label(NSLocalizedString("Appearance", bundle: .module, comment: "Appearance"), systemImage: "circle.righthalf.filled")
         } lightLabel: {
-            Label(LocalizedStringKey("Appearance"), systemImage: "sun.max.circle")
+            Label(NSLocalizedString("Appearance", bundle: .module, comment: "Appearance"), systemImage: "sun.max.circle")
         } darkLabel: {
-            Label(LocalizedStringKey("Appearance"), systemImage: "moon.circle")
+            Label(NSLocalizedString("Appearance", bundle: .module, comment: "Appearance"), systemImage: "moon.circle")
         }
     }()
 }
