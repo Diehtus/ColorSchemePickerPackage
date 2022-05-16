@@ -1,4 +1,5 @@
 import SwiftUI
+import os
 
 /// Ein Picker der den UserInterfaceStyle ändert
 ///
@@ -73,11 +74,11 @@ extension ColorSchemePicker where PickerLabel == Label<Text, Image> {
     /// Der Text lautet: 'Darstellung'
     public static let standard: ColorSchemePicker = {
         ColorSchemePicker {
-            Label("Darstellung", systemImage: "circle.righthalf.filled")
+            Label(LocalizedStringKey("Appearance"), systemImage: "circle.righthalf.filled")
         } lightLabel: {
-            Label("Darstellung", systemImage: "sun.max.circle")
+            Label(LocalizedStringKey("Appearance"), systemImage: "sun.max.circle")
         } darkLabel: {
-            Label("Darstellung", systemImage: "moon.circle")
+            Label(LocalizedStringKey("Appearance"), systemImage: "moon.circle")
         }
     }()
 }
@@ -88,6 +89,8 @@ final class ColorSchemeManager: ObservableObject {
     @AppStorage("ColorSchemePicker_colorScheme") var colorScheme: ColorScheme = .unspecified {
         didSet { applyColorScheme() }
     }
+    
+    private static let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "", category: String(describing: ColorSchemeManager.self))
     
     fileprivate static let shared = ColorSchemeManager()
     
@@ -107,14 +110,15 @@ final class ColorSchemeManager: ObservableObject {
  
         var description: String {
             switch self {
-            case .unspecified: return "System"
-            case .light: return "Hell"
-            case .dark: return "Dunkel"
+            case .unspecified: return NSLocalizedString("system", bundle: .module, comment: "system interface style")
+            case .light: return NSLocalizedString("light", bundle: .module, comment: "light interface style")
+            case .dark: return NSLocalizedString("dark", bundle: .module, comment: "dark interface style")
             }
         }
     }
     
     private func applyColorScheme() {
         window?.overrideUserInterfaceStyle = UIUserInterfaceStyle(rawValue: colorScheme.rawValue) ?? .unspecified
+        Self.logger.info("UserInterfaceStyle changed to: \(self.colorScheme.description)")
     }
 }
