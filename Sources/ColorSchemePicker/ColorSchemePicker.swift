@@ -9,6 +9,7 @@ import os
 /// ```
 /// ColorSchemePicker.standard
 /// ```
+/// - Important: Init ColorSchemeManager in AppGroup!
 @available(iOS 14.0, *)
 public struct ColorSchemePicker<PickerLabel>: View where PickerLabel: View {
     
@@ -19,6 +20,7 @@ public struct ColorSchemePicker<PickerLabel>: View where PickerLabel: View {
     let lightLabel: PickerLabel?
     
     /// Erstelle einen `ColorSchemePicker` mit einem Standardlabel
+    /// - Important: Init ColorSchemeManager in AppGroup!
     /// - Parameter label: vom Typ `View` z.B. Text, Label etc.
     public init(@ViewBuilder label: () -> PickerLabel) {
         self.systemLabel = label()
@@ -27,6 +29,7 @@ public struct ColorSchemePicker<PickerLabel>: View where PickerLabel: View {
     }
     
     /// Erstelle einen `ColorSchemePicker` mit System-, Hell- und Dunkellabel
+    /// - Important: Init ColorSchemeManager in AppGroup!
     /// - Parameters:
     ///   - systemLabel: vom Typ `View` z.B. Text, Label etc.
     ///   - lightLabel: vom Typ `View` z.B. Text, Label etc.
@@ -60,6 +63,7 @@ public struct ColorSchemePicker<PickerLabel>: View where PickerLabel: View {
 extension ColorSchemePicker where PickerLabel == Text {
     /// Erstelle einen `ColorSchemePicker` mit einem Text
     /// - Parameter text: Beschreibung für den Picker
+    /// - Important: Init ColorSchemeManager in AppGroup!
     public init(_ text: String) {
         self.systemLabel = Text(text)
         self.lightLabel = nil
@@ -72,6 +76,7 @@ extension ColorSchemePicker where PickerLabel == Label<Text, Image> {
     /// Standard `ColorSchemePicker` mit vordefinierten Label
     ///
     /// Der Text lautet: 'Darstellung'
+    /// - Important: Init ColorSchemeManager in AppGroup!
     public static let standard: ColorSchemePicker = {
         ColorSchemePicker {
             Label(NSLocalizedString("Appearance", bundle: .module, comment: "Appearance"), systemImage: "circle.righthalf.filled")
@@ -84,7 +89,7 @@ extension ColorSchemePicker where PickerLabel == Label<Text, Image> {
 }
 
 @available(iOS 14.0, *)
-final class ColorSchemeManager: ObservableObject {
+public final class ColorSchemeManager: ObservableObject {
     
     @AppStorage("ColorSchemePicker_colorScheme") var colorScheme: ColorScheme = .unspecified {
         didSet { applyColorScheme() }
