@@ -106,9 +106,7 @@ public final class ColorSchemeManager: ObservableObject {
         return window
     }
     
-    private init() {
-        applyColorScheme()
-    }
+    private init() { }
     
     var allCases: [ColorScheme] { ColorScheme.allCases }
     
