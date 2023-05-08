@@ -97,7 +97,7 @@ public final class ColorSchemeManager: ObservableObject {
     
     private static let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "", category: String(describing: ColorSchemeManager.self))
     
-    fileprivate static let shared = ColorSchemeManager()
+    public static let shared = ColorSchemeManager()
     
     private var window: UIWindow? {
         guard let scene = UIApplication.shared.connectedScenes.first,
