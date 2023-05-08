@@ -20,7 +20,7 @@ public struct ColorSchemePicker<PickerLabel>: View where PickerLabel: View {
     let lightLabel: PickerLabel?
     
     /// Erstelle einen `ColorSchemePicker` mit einem Standardlabel
-    /// - Important: Init ColorSchemeManager in AppGroup!
+    /// - Important: Call 'ColorSchemeManager.shared.applyColorScheme()' in AppGroup!
     /// - Parameter label: vom Typ `View` z.B. Text, Label etc.
     public init(@ViewBuilder label: () -> PickerLabel) {
         self.systemLabel = label()
@@ -29,7 +29,7 @@ public struct ColorSchemePicker<PickerLabel>: View where PickerLabel: View {
     }
     
     /// Erstelle einen `ColorSchemePicker` mit System-, Hell- und Dunkellabel
-    /// - Important: Init ColorSchemeManager in AppGroup!
+    /// - Important: Call 'ColorSchemeManager.shared.applyColorScheme()' in AppGroup!
     /// - Parameters:
     ///   - systemLabel: vom Typ `View` z.B. Text, Label etc.
     ///   - lightLabel: vom Typ `View` z.B. Text, Label etc.
@@ -63,7 +63,7 @@ public struct ColorSchemePicker<PickerLabel>: View where PickerLabel: View {
 extension ColorSchemePicker where PickerLabel == Text {
     /// Erstelle einen `ColorSchemePicker` mit einem Text
     /// - Parameter text: Beschreibung für den Picker
-    /// - Important: Init ColorSchemeManager in AppGroup!
+    /// - Important: Call 'ColorSchemeManager.shared.applyColorScheme()' in AppGroup!
     public init(_ text: String) {
         self.systemLabel = Text(text)
         self.lightLabel = nil
@@ -76,7 +76,7 @@ extension ColorSchemePicker where PickerLabel == Label<Text, Image> {
     /// Standard `ColorSchemePicker` mit vordefinierten Label
     ///
     /// Der Text lautet: 'Darstellung'
-    /// - Important: Init ColorSchemeManager in AppGroup!
+    /// - Important: Call 'ColorSchemeManager.shared.applyColorScheme()' in AppGroup!
     public static let standard: ColorSchemePicker = {
         ColorSchemePicker {
             Label(NSLocalizedString("Appearance", bundle: .module, comment: "Appearance"), systemImage: "circle.righthalf.filled")
@@ -124,7 +124,7 @@ public final class ColorSchemeManager: ObservableObject {
         }
     }
     
-    private func applyColorScheme() {
+    public func applyColorScheme() {
         window?.overrideUserInterfaceStyle = UIUserInterfaceStyle(rawValue: colorScheme.rawValue) ?? .unspecified
         Self.logger.info("UserInterfaceStyle changed to: \(self.colorScheme.description)")
     }
