@@ -92,7 +92,11 @@ extension ColorSchemePicker where PickerLabel == Label<Text, Image> {
 public final class ColorSchemeManager: ObservableObject {
     
     @AppStorage("ColorSchemePicker_colorScheme") var colorScheme: ColorScheme = .unspecified {
-        didSet { applyColorScheme() }
+        didSet {
+            if oldValue != colorScheme {
+                applyColorScheme()
+            }
+        }
     }
     
     private static let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "", category: String(describing: ColorSchemeManager.self))
