@@ -127,6 +127,7 @@ public final class ColorSchemeManager: ObservableObject {
     }
     
     public func applyColorScheme() {
+        guard window?.overrideUserInterfaceStyle != UIUserInterfaceStyle(rawValue: colorScheme.rawValue) else { return }
         window?.overrideUserInterfaceStyle = UIUserInterfaceStyle(rawValue: colorScheme.rawValue) ?? .unspecified
         Self.logger.info("UserInterfaceStyle changed to: \(self.colorScheme.description)")
     }
